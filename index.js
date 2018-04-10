@@ -20,8 +20,6 @@ var defaults = {
   minPixelValue: 1,
   mediaQuery: false
 };
-
-let isInit = false;
 module.exports = postcss.plugin('postcss-px-to-viewport', function (options) {
 
   var opts = objectAssign({}, defaults, options);
@@ -30,10 +28,6 @@ module.exports = postcss.plugin('postcss-px-to-viewport', function (options) {
   return function (css) {
 
     css.walkDecls(function (decl, i) {
-      
-        console.log(decl.source.input.file)
-        isInit = true
-      
       // This should be the fastest test and will remove most declarations
       if (decl.value.indexOf('px') === -1) return;
 
