@@ -28,6 +28,14 @@ module.exports = postcss.plugin('postcss-px-to-viewport', function (options) {
   return function (css) {
 
     css.walkDecls(function (decl, i) {
+      if (options.exclude) {
+        if (Object.prototype.toString.call(options.exclude) !== '[object RegExp]') {
+          throw new Error('options.exclude should be RegExp!')
+        }
+        if (decl.source.input.file.match(options.exclude) !== null) {
+          return i.root = decl
+        }
+      }
       // This should be the fastest test and will remove most declarations
       if (decl.value.indexOf('px') === -1) return;
 
